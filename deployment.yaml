@@ -18,18 +18,17 @@ spec:
           ports:
             - containerPort: 8080
           env:
-           - name: SPRING_DATASOURCE_URL
-             value: jdbc:oracle:thin:@192.168.1.101:31521:xe # oracle-xe-11g 서비스의 EXTERNAL-IP로 수정
-           - name: SPRING_DATASOURCE_USERNAME
-             value: POP
-           - name: SPRING_DATASOURCE_PASSWORD
-             value: POP
-         volumeMounts:
-           - name: upload
-             mountPath: /opt/upload
-     volumes:
-       - name: upload
-         nfs:
-           server: 192.168.1.10 # 여기에 NFS 서버 IP 주소를 입력
-           path: /nfs_shared/spring/upload # NFS 서버의 공유 디렉토리 경로
-
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:oracle:thin:@192.168.1.101:31521:xe
+            - name: SPRING_DATASOURCE_USERNAME
+              value: POP
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: POP
+          volumeMounts:
+            - name: upload
+              mountPath: /opt/upload
+      volumes:
+        - name: upload
+          nfs:
+            server: 192.168.1.10
+            path: /nfs_shared/spring/upload
