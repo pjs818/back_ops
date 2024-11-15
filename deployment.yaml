@@ -24,7 +24,7 @@ spec:
              value: POP
            - name: SPRING_DATASOURCE_PASSWORD
              value: POP
-          volumeMounts:
+         volumeMounts:
            - name: upload
              mountPath: /opt/upload
      volumes:
