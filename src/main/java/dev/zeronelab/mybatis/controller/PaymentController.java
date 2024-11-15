@@ -21,6 +21,7 @@ import dev.zeronelab.mybatis.vo.BucketEntity;
 import dev.zeronelab.mybatis.vo.DeliveryEntity;
 import dev.zeronelab.mybatis.vo.PorderEntity;
 
+@RequestMapping("/api")
 @RestController
 public class PaymentController {
 

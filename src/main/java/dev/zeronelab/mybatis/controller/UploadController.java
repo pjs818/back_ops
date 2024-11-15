@@ -22,6 +22,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+@RequestMapping("/api")
 @Controller
 public class UploadController {
 
