@@ -12,4 +12,6 @@ public class GoodsEntity {
     private int pquan;
     private String pimg;
     private String pcon;
+
+    private String sname;
 }
