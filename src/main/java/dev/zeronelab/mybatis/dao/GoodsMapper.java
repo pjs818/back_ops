@@ -12,6 +12,8 @@ public interface GoodsMapper {
 
     public List<PopupEntity> goodsPopupList() throws Exception;
 
+    public List<GoodsEntity> goodsListAll() throws Exception;
+
     public List<GoodsEntity> goodsList(Integer sno) throws Exception;
 
     public List<GoodsEntity> goodsDetail(Integer sno, Integer pno) throws Exception;

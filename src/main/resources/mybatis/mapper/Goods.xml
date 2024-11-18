@@ -12,6 +12,12 @@
         order by pop.sno
     </select>
 
+    <select id="goodsListAll" resultType="dev.zeronelab.mybatis.vo.GoodsEntity">
+        select product.*, pop.sname
+        from product, pop
+        where product.sno = pop.sno
+    </select>
+
     <select id="goodsList" resultType="dev.zeronelab.mybatis.vo.GoodsEntity">
         select *
         from product

@@ -22,7 +22,7 @@ public class GoodsController {
     private GoodsMapper goodsMapper;
 
     @RequestMapping(value = "goods/goodspopuplist", method = RequestMethod.GET)
-    public Map<String, Object> goodsPopupList() throws Exception{
+    public Map<String, Object> goodsPopupList() throws Exception {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
@@ -31,18 +31,23 @@ public class GoodsController {
         return rtnObj;
     }
 
-    @RequestMapping(value = "goods/goodslist/{sno}", method = RequestMethod.GET)
-    public Map<String, Object> goodsList(@PathVariable("sno") Integer sno) throws Exception{
+    @RequestMapping(value = { "goods/goodslist/{sno}", "goods/goodslist" }, method = RequestMethod.GET)
+    public Map<String, Object> goodsList(@PathVariable("sno") Integer sno) throws Exception {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
-        rtnObj.put("goodslist", goodsMapper.goodsList(sno));
+        if (sno == null || sno == 0) {
+            rtnObj.put("goodslist", goodsMapper.goodsListAll());
+        } else {
+            rtnObj.put("goodslist", goodsMapper.goodsList(sno));
+        }
 
         return rtnObj;
     }
 
     @RequestMapping(value = "goods/goodsdetail/{sno}/{pno}", method = RequestMethod.GET)
-    public Map<String, Object> goodsDetail(@PathVariable("sno") Integer sno, @PathVariable("pno") Integer pno) throws Exception{
+    public Map<String, Object> goodsDetail(@PathVariable("sno") Integer sno, @PathVariable("pno") Integer pno)
+            throws Exception {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
@@ -52,7 +57,7 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "goods/reviewlist/{pno}", method = RequestMethod.GET)
-    public Map<String, Object> reviewList(@PathVariable Integer pno) throws Exception{
+    public Map<String, Object> reviewList(@PathVariable Integer pno) throws Exception {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
@@ -62,13 +67,13 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "goods/writereview", method = RequestMethod.POST)
-    public ResponseEntity<String> writeReview(@RequestBody ReviewEntity reviewEntity) throws Exception{
+    public ResponseEntity<String> writeReview(@RequestBody ReviewEntity reviewEntity) throws Exception {
 
         ResponseEntity<String> entity = null;
         try {
             goodsMapper.writeReview(reviewEntity);
             entity = new ResponseEntity<String>("succ", HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -77,14 +82,15 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "goods/modifyreview/{rno}", method = RequestMethod.POST)
-    public ResponseEntity<String> modifyReview(@PathVariable Integer rno, @RequestBody ReviewEntity reviewEntity) throws Exception{
+    public ResponseEntity<String> modifyReview(@PathVariable Integer rno, @RequestBody ReviewEntity reviewEntity)
+            throws Exception {
 
         ResponseEntity<String> entity = null;
         try {
             reviewEntity.setRno(rno);
             goodsMapper.modifyReview(reviewEntity);
             entity = new ResponseEntity<String>("succ", HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -93,13 +99,13 @@ public class GoodsController {
     }
 
     @RequestMapping(value = "goods/deletereview/{rno}", method = RequestMethod.POST)
-    public ResponseEntity<String> deleteReview(@PathVariable Integer rno) throws Exception{
+    public ResponseEntity<String> deleteReview(@PathVariable Integer rno) throws Exception {
 
         ResponseEntity<String> entity = null;
         try {
             goodsMapper.deleteReview(rno);
             entity = new ResponseEntity<String>("succ", HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
