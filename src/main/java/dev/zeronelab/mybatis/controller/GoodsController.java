@@ -32,13 +32,15 @@ public class GoodsController {
     }
 
     @RequestMapping(value = { "goods/goodslist/{sno}", "goods/goodslist" }, method = RequestMethod.GET)
-    public Map<String, Object> goodsList(@PathVariable("sno") Integer sno) throws Exception {
+    public Map<String, Object> goodsList(@PathVariable(value = "sno", required = false) Integer sno) throws Exception {
 
         Map<String, Object> rtnObj = new HashMap<>();
 
         if (sno == null || sno == 0) {
+            // sno가 null이거나 0인 경우 전체 상품 리스트 반환
             rtnObj.put("goodslist", goodsMapper.goodsListAll());
         } else {
+            // sno가 있는 경우 해당 상품 리스트 반환
             rtnObj.put("goodslist", goodsMapper.goodsList(sno));
         }
 
