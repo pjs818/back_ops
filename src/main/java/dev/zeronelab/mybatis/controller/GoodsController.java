@@ -34,6 +34,7 @@ public class GoodsController {
     @RequestMapping(value = { "goods/goodslist/{sno}", "goods/goodslist" }, method = RequestMethod.GET)
     public Map<String, Object> goodsList(@PathVariable(value = "sno", required = false) Integer sno) throws Exception {
 
+        // 테스트
         Map<String, Object> rtnObj = new HashMap<>();
 
         if (sno == null || sno == 0) {
