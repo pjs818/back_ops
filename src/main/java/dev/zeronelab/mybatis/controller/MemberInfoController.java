@@ -98,14 +98,8 @@ public class MemberInfoController {
 
         try {
             // 1. 회원 정보 삭제
-            memberMapper.deleteBcomment(mno);
-            memberMapper.deleteReview(mno);
-            memberMapper.deleteBucket(mno);
-            memberMapper.deleteFboard(mno);
-            memberMapper.deletePorder(mno);
+            memberMapper.deleteByMno(mno);
             int deletedRows = memberMapper.deleteMemberByMno(mno);
-
-
 
             if (deletedRows > 0) {
                 return new ResponseEntity<>("회원탈퇴가 완료되었습니다.", HttpStatus.OK); // 200 OK

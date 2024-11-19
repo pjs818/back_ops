@@ -86,24 +86,21 @@
         DELETE FROM member WHERE mno = #{mno}
     </delete>
 
-    <delete id="deleteBcomment">
-        DELETE FROM bcomment WHERE mno = #{mno}
-    </delete>
-
-    <delete id="deleteReview">
-        DELETE FROM review WHERE mno = #{mno}
-    </delete>
-
-    <delete id="deleteBucket">
-        DELETE FROM bucket WHERE mno = #{mno}
-    </delete>
-
-    <delete id="deleteFboard">
-        DELETE FROM fboard WHERE mno = #{mno}
-    </delete>
-
-    <delete id="deletePorder">
-        DELETE FROM porder WHERE mno = #{mno}
+    <delete id="deleteByMno">
+    <!-- bcomment 테이블에서 mno 삭제 -->
+        DELETE FROM bcomment WHERE mno = #{mno};
+    
+    <!-- review 테이블에서 mno 삭제 -->
+        DELETE FROM review WHERE mno = #{mno};
+    
+    <!-- bucket 테이블에서 mno 삭제 -->
+        DELETE FROM bucket WHERE mno = #{mno};
+    
+    <!-- fboard 테이블에서 mno 삭제 -->
+        DELETE FROM fboard WHERE mno = #{mno};
+    
+    <!-- porder 테이블에서 mno 삭제 -->
+        DELETE FROM porder WHERE mno = #{mno};
     </delete>
 
     <select id="idAndEmailCheck" parameterType="map" resultType="dev.zeronelab.mybatis.vo.MemberEntity">
