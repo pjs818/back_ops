@@ -3,6 +3,8 @@ package dev.zeronelab.mybatis.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import dev.zeronelab.mybatis.util.MediaUtils;
@@ -66,7 +68,7 @@ public class UploadController {
     return savedName;
 
   }
-  
+
   @ResponseBody
   @RequestMapping(value ="/uploadAjax", method=RequestMethod.POST, 
                   produces = "text/plain;charset=UTF-8")
@@ -82,108 +84,106 @@ public class UploadController {
                 file.getBytes()), 
           HttpStatus.CREATED);
   }
-  
-  
+
   @ResponseBody
   @RequestMapping("/displayFile")
-  public ResponseEntity<byte[]>  displayFile(String fileName)throws Exception{
-    
-    InputStream in = null; 
-    ResponseEntity<byte[]> entity = null;
-    
-    logger.info("FILE NAME: " + fileName);
-    
-    try{
-      
-      String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
-      
-      MediaType mType = MediaUtils.getMediaType(formatName);
-      
-      HttpHeaders headers = new HttpHeaders();
-      
-      in = new FileInputStream(uploadPath+fileName);
-      
-      if(mType != null){
-        headers.setContentType(mType);
-      }else{
+  public ResponseEntity<byte[]> displayFile(String fileName) throws Exception {
 
-        fileName = fileName.substring(fileName.indexOf("_")+1);
+    InputStream in = null;
+    ResponseEntity<byte[]> entity = null;
+
+    logger.info("FILE NAME: " + fileName);
+
+    try {
+
+      String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+      MediaType mType = MediaUtils.getMediaType(formatName);
+
+      HttpHeaders headers = new HttpHeaders();
+
+      in = new FileInputStream(uploadPath + fileName);
+
+      if (mType != null) {
+        headers.setContentType(mType);
+      } else {
+
+        fileName = fileName.substring(fileName.indexOf("_") + 1);
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-        headers.add("Content-Disposition", "attachment; filename=\""+
-          new String(fileName.getBytes("UTF-8"), "ISO-8859-1")+"\"");
+        headers.add("Content-Disposition", "attachment; filename=\"" +
+            new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
       }
 
-        entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in), 
-          headers, 
+      entity = new ResponseEntity<byte[]>(IOUtils.toByteArray(in),
+          headers,
           HttpStatus.CREATED);
-    }catch(Exception e){
+    } catch (Exception e) {
       e.printStackTrace();
       entity = new ResponseEntity<byte[]>(HttpStatus.BAD_REQUEST);
-    }finally{
+    } finally {
       in.close();
     }
-      return entity;    
+    return entity;
   }
-    
-  @ResponseBody
-  @RequestMapping(value="/deleteFile", method=RequestMethod.POST)
-  public ResponseEntity<String> deleteFile(@RequestBody String fileName){
 
-    logger.info("delete file: "+ fileName);
+  @ResponseBody
+  @RequestMapping(value = "/deleteFile", method = RequestMethod.POST)
+  public ResponseEntity<String> deleteFile(@RequestBody String fileName) {
+
+    logger.info("delete file: " + fileName);
 
     String formatFileName = fileName.substring(fileName.indexOf("/"), fileName.lastIndexOf('"'));
 
-    logger.info("formatFileName: "+formatFileName);
-    
-    String formatTypeName = formatFileName.substring(formatFileName.lastIndexOf(".")+1);
+    logger.info("formatFileName: " + formatFileName);
 
-    logger.info("formatName: "+formatTypeName);
-    
+    String formatTypeName = formatFileName.substring(formatFileName.lastIndexOf(".") + 1);
+
+    logger.info("formatName: " + formatTypeName);
+
     MediaType mType = MediaUtils.getMediaType(formatTypeName);
 
-    logger.info("mTpye: "+mType);
+    logger.info("mTpye: " + mType);
 
     logger.info(uploadPath + formatFileName.replace('/', File.separatorChar));
-    if(mType != null){
-      String front = formatFileName.substring(0,12);
+    if (mType != null) {
+      String front = formatFileName.substring(0, 12);
       String end = formatFileName.substring(14);
-      new File(uploadPath + (front+end).replace('/', File.separatorChar)).delete();
+      new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
     }
-    
+
     new File(uploadPath + formatFileName.replace('/', File.separatorChar)).delete();
 
-    
     return new ResponseEntity<String>("deleted", HttpStatus.OK);
-  }  
-  
+  }
+
   @ResponseBody
-  @RequestMapping(value="/deleteAllFiles", method=RequestMethod.POST)
-  public ResponseEntity<String> deleteFile(@RequestBody BoardEntity allFile){
+  @RequestMapping(value = "/deleteAllFiles", method = RequestMethod.POST)
+  public ResponseEntity<String> deleteFile(@RequestBody BoardEntity allFile) {
 
     String[] files = allFile.getFiles();
 
-    logger.info("delete all files: "+ files);
+    logger.info("delete all files: " + files);
 
-    if(files == null || files.length == 0) {
+    if (files == null || files.length == 0) {
       return new ResponseEntity<String>("deleted", HttpStatus.OK);
     }
 
     for (String fileName : files) {
-      String formatName = fileName.substring(fileName.lastIndexOf(".")+1);
-      
+      String formatName = fileName.substring(fileName.lastIndexOf(".") + 1);
+
       MediaType mType = MediaUtils.getMediaType(formatName);
-      
-      if(mType != null){      
-        
-        String front = fileName.substring(0,12);
+
+      if (mType != null) {
+
+        String front = fileName.substring(0, 12);
         String end = fileName.substring(14);
-        new File(uploadPath + (front+end).replace('/', File.separatorChar)).delete();
+        new File(uploadPath + (front + end).replace('/', File.separatorChar)).delete();
       }
-      
+
       new File(uploadPath + fileName.replace('/', File.separatorChar)).delete();
-      
+
     }
     return new ResponseEntity<String>("deleted", HttpStatus.OK);
-  }  
+  }
 
 }
