@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -89,6 +90,7 @@ public class MemberInfoController {
         }
     }
 
+    @Transactional
     @ResponseBody
     @PostMapping("/api/deleteinfo")
     public ResponseEntity<String> deleteMemberInfo(@RequestBody MemberDTO memberDTO) {
