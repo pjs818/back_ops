@@ -86,6 +86,26 @@
         DELETE FROM member WHERE mno = #{mno}
     </delete>
 
+    <delete id="deleteBcomment">
+        DELETE FROM bcomment WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteReview">
+        DELETE FROM review WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteBucket">
+        DELETE FROM bucket WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteFboard">
+        DELETE FROM fboard WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deletePorder">
+        DELETE FROM proder WHERE mno = #{mno}
+    </delete>
+
     <select id="idAndEmailCheck" parameterType="map" resultType="dev.zeronelab.mybatis.vo.MemberEntity">
         SELECT *
         FROM member

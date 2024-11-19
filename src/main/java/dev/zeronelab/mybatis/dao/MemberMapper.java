@@ -26,6 +26,12 @@ public interface MemberMapper {
 
     public int deleteMemberByMno(Integer mno) throws Exception;
 
+    public void deleteBcomment(Integer mno) throws Exception;
+    public void deleteReview(Integer mno) throws Exception;
+    public void deleteBucket(Integer mno) throws Exception;
+    public void deleteFboard(Integer mno) throws Exception;
+    public void deletePorder(Integer mno) throws Exception;
+
     public MemberEntity idAndEmailCheck(@Param("mid") String mid, @Param("memail") String memail) throws Exception;
 
 
