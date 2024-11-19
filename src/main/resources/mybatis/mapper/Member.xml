@@ -82,7 +82,7 @@
         WHERE mno = #{mno}
     </update>
 
-    <delete id="deleteMemberByMno">
+    <delete id="deleteMemberByMno" parameterType="Integer">
         DELETE FROM member WHERE mno = #{mno}
     </delete>
 
@@ -103,7 +103,7 @@
     </delete>
 
     <delete id="deletePorder">
-        DELETE FROM proder WHERE mno = #{mno}
+        DELETE FROM porder WHERE mno = #{mno}
     </delete>
 
     <select id="idAndEmailCheck" parameterType="map" resultType="dev.zeronelab.mybatis.vo.MemberEntity">
