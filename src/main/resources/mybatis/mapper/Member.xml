@@ -82,7 +82,7 @@
         WHERE mno = #{mno}
     </update>
 
-    <delete id="deleteMemberByMno" parameterType="int">
+    <delete id="deleteMemberByMno" parameterType="Integer">
         DELETE FROM member WHERE mno = #{mno}
     </delete>
 
