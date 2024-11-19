@@ -1,6 +1,7 @@
 package dev.zeronelab.mybatis.controller;
 
 import dev.zeronelab.mybatis.dao.MemberMapper;
+import dev.zeronelab.mybatis.dto.MemberDTO;
 import dev.zeronelab.mybatis.util.JWTUtil;
 import dev.zeronelab.mybatis.vo.MemberEntity;
 import org.slf4j.Logger;
@@ -90,8 +91,8 @@ public class MemberInfoController {
 
     @ResponseBody
     @PostMapping("/api/deleteinfo")
-    public ResponseEntity<String> deleteMemberInfo(@RequestBody Map<String, Object> payload) {
-        Integer mno = (Integer) payload.get("mno"); // 회원 번호
+    public ResponseEntity<String> deleteMemberInfo(@RequestBody MemberDTO memberDTO) {
+        Integer mno = memberDTO.getMno(); // 회원 번호
 
         try {
             // 1. 회원 정보 삭제
