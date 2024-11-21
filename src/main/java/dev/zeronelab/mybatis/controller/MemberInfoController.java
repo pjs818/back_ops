@@ -96,9 +96,32 @@ public class MemberInfoController {
     public ResponseEntity<String> deleteMemberInfo(@RequestBody MemberDTO memberDTO) {
         Integer mno = memberDTO.getMno(); // 회원 번호
 
+        System.out.println("mno = " + mno);
+
         try {
-            // 1. 회원 정보 삭제
-            memberMapper.deleteByMno(mno);
+            // 회원 정보 삭제
+
+            // 1. 회원 게시판 정보, 결제정보 삭제
+            List<Integer> selectBnos = memberMapper.selectBnos(mno);
+            List<Integer> selectPonos = memberMapper.selectPonos(mno);
+
+            for (Integer bno : selectBnos) {
+                memberMapper.deleteAttachs(bno);
+                memberMapper.deleteAllcomments(bno);
+            }
+
+            for (Integer pono : selectPonos) {
+                memberMapper.deleteDeliverys(pono);
+            }
+
+            // 2. 리뷰 및 댓글 들 삭제
+            memberMapper.deleteComments(mno);
+            memberMapper.deleteFboard(mno);
+            memberMapper.deleteReviews(mno);
+            memberMapper.deleteBuckets(mno);
+            memberMapper.deletePorder(mno);
+
+            // 최종삭제
             int deletedRows = memberMapper.deleteMemberByMno(mno);
 
             if (deletedRows > 0) {

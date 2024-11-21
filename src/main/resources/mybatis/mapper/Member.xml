@@ -86,21 +86,44 @@
         DELETE FROM member WHERE mno = #{mno}
     </delete>
 
-    <delete id="deleteByMno">
-    <!-- bcomment 테이블에서 mno 삭제 -->
-        DELETE FROM bcomment WHERE mno = #{mno};
-    
-    <!-- review 테이블에서 mno 삭제 -->
-        DELETE FROM review WHERE mno = #{mno};
-    
-    <!-- bucket 테이블에서 mno 삭제 -->
-        DELETE FROM bucket WHERE mno = #{mno};
-    
-    <!-- fboard 테이블에서 mno 삭제 -->
-        DELETE FROM fboard WHERE mno = #{mno};
-    
-    <!-- porder 테이블에서 mno 삭제 -->
-        DELETE FROM porder WHERE mno = #{mno};
+    <select id="selectBnos" resultType="Integer">
+        select bno from fboard where mno = #{mno}
+    </select>
+
+    <select id="selectPonos" resultType="Integer">
+        select pono from porder where mno = #{mno}
+    </select>
+
+    <delete id="deleteAttachs">
+        DELETE FROM attach WHERE bno = #{bno}
+    </delete>
+
+    <delete id="deleteAllcomments">
+        DELETE FROM bcomment WHERE bno = #{bno}
+    </delete>
+
+    <delete id="deleteDeliverys">
+        DELETE FROM delivery WHERE pono = #{pono}
+    </delete>
+
+    <delete id="deleteComments">
+        DELETE FROM bcomment WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteReviews">
+        DELETE FROM review WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteBuckets">
+        DELETE FROM bucket WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deleteFboard">
+        DELETE FROM fboard WHERE mno = #{mno}
+    </delete>
+
+    <delete id="deletePorder">
+        DELETE FROM porder WHERE mno = #{mno}
     </delete>
 
     <select id="idAndEmailCheck" parameterType="map" resultType="dev.zeronelab.mybatis.vo.MemberEntity">
